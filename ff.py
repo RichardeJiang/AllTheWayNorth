@@ -17,11 +17,11 @@ def save_image(data, fname="img1.png", swap_channel=True):
     cv2.imwrite(fname, data)
 
 def draw_label(image, point, label, font=cv2.FONT_HERSHEY_SIMPLEX,
-               font_scale=0.5, thickness=2):
+               font_scale=0.4, thickness=1):
     size = cv2.getTextSize(label, font, font_scale, thickness)[0]
     x, y = point
     cv2.rectangle(image, (x, y - size[1]),
-                  (x + size[0], y), (255, 0, 0), cv2.FILLED)
+                  (x + size[0], y), (34, 34, 178), cv2.FILLED)
     cv2.putText(image, label, point, font, font_scale,
                 (255, 255, 255), thickness)
 
@@ -132,7 +132,14 @@ def show_camera():
 if __name__ == "__main__":
     
     input_names = ['image_tensor']
-    IMAGE_PATH = "car.png"
+
+    # what we want from COCO labels: vehicles
+    desired_classes_names = ["truck", "bus", "motorcycle", "car", "bicycle"]
+    desired_classes = {3:"car", 2:"bicycle", 4:"motorcycle", 6:"bus", 8:"truck"}
+
+    # calculation: SSD input dimension: 300 x 300; we want output window: (1280 / 720)*300 x 300
+    standard_width = int((1280 / 720.0) * 300.0)
+    standard_height = 300
 
     # The TensorRT inference graph file downloaded from Colab or your local machine.
     pb_fname = "trt_graph1.pb"
@@ -154,9 +161,6 @@ if __name__ == "__main__":
 
     tf_input.shape.as_list()
 
-    image = cv2.imread(IMAGE_PATH)
-    image = cv2.resize(image, (300, 300))
-
     print("TensorRT model loaded!")
     print("Loading camera...")
 
@@ -172,6 +176,12 @@ if __name__ == "__main__":
         while cv2.getWindowProperty('CSI Camera',0) >= 0:
             ret_val, image = cap.read()
             now = time.time()
+
+            """
+            Inside the main processing loop, do stuff
+            """
+
+            image_to_show = cv2.resize(image, (standard_width, standard_height))
             image = cv2.resize(image, (300, 300))
 
             """
@@ -183,14 +193,21 @@ if __name__ == "__main__":
             boxes = boxes[0]  # index by 0 to remove batch dimension
             scores = scores[0]
             classes = classes[0]
-            num_detections = int(num_detections[0])
+            # num_detections = int(num_detections[0])
+
+            # retain only those detection we are interested in: vehicles
+            desired_detection_idx = np.isin(classes, list(desired_classes.keys()))
+            boxes = boxes[desired_detection_idx]
+            scores = scores[desired_detection_idx]
+            classes = classes[desired_detection_idx]
+            num_detections = len(scores)
 
             # Boxes unit in pixels (image coordinates).
             boxes_pixels = []
             for i in range(num_detections):
                 # scale box to image coordinates
-                box = boxes[i] * np.array([image.shape[0],
-                                        image.shape[1], image.shape[0], image.shape[1]])
+                box = boxes[i] * np.array([image_to_show.shape[0],
+                                        image_to_show.shape[1], image_to_show.shape[0], image_to_show.shape[1]])
                 box = np.round(box).astype(int)
                 boxes_pixels.append(box)
             boxes_pixels = np.array(boxes_pixels)
@@ -204,22 +221,23 @@ if __name__ == "__main__":
                 box = boxes_pixels[i]
                 box = np.round(box).astype(int)
                 # Draw bounding box.
-                image = cv2.rectangle(
-                    image, (box[1], box[0]), (box[3], box[2]), (0, 255, 0), 2)
-                label = "{}:{:.2f}".format(int(classes[i]), scores[i])
+                image_to_show = cv2.rectangle(
+                    image_to_show, (box[1], box[0]), (box[3], box[2]), (0, 255, 0), 2)
+                label = desired_classes[classes[i]] + " {:.2f}".format(scores[i])
                 # Draw label (class index and probability).
-                draw_label(image, (box[1], box[0]), label)
+                draw_label(image_to_show, (box[1], box[0]), label)
 
             """
             End of original inference step
             """
 
-            cv2.imshow('CSI Camera',image)
-	    # This also acts as 
+            cv2.imshow('Camera Input, Detecting...',image_to_show)
+	        # This also acts as 
             keyCode = cv2.waitKey(30) & 0xff
             # Stop the program on the ESC key
             if keyCode == 27:
                break
+               
         tf_sess.close()
         cap.release()
         cv2.destroyAllWindows()

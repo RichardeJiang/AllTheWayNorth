@@ -141,7 +141,7 @@ if __name__ == "__main__":
     # print(gstreamer_pipeline(flip_method=0))
     # cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
     cap = cv2.VideoCapture("project_video.mp4")
-    framePerSecond = 5.0
+    framePerSecond = 7.0
     cv2.namedWindow('carVideo', 0)
     while(cap.isOpened()):
         _, image = cap.read()
@@ -154,7 +154,7 @@ if __name__ == "__main__":
         image_to_show = cv2.resize(image, (standard_width, standard_height))
         image = cv2.resize(image, (300, 300))
         
-
+        print("image processing finished, inferencing...")
         """
         Original inference step
         """
@@ -188,6 +188,7 @@ if __name__ == "__main__":
         pick = non_max_suppression(boxes_pixels, scores[:num_detections], 0.5)
         # print(pick)
 
+        print("non max suppression finished.")
 
         for i in pick:
             box = boxes_pixels[i]
