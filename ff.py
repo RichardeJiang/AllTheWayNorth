@@ -167,7 +167,7 @@ if __name__ == "__main__":
     """
     Camera module
     """
-    print(gstreamer_pipeline(flip_method=0))
+    ## print(gstreamer_pipeline(flip_method=0))
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
     framePerSecond = 5.0
     if cap.isOpened():
@@ -176,6 +176,7 @@ if __name__ == "__main__":
         while cv2.getWindowProperty('CSI Camera',0) >= 0:
             ret_val, image = cap.read()
             now = time.time()
+            print("Image captured, inferencing...")
 
             """
             Inside the main processing loop, do stuff
@@ -248,55 +249,4 @@ if __name__ == "__main__":
     """
     End of camera module
     """
-
-    # scores, boxes, classes, num_detections = tf_sess.run([tf_scores, tf_boxes, tf_classes, tf_num_detections], feed_dict={
-    #     tf_input: image[None, ...]
-    # })
-    # boxes = boxes[0]  # index by 0 to remove batch dimension
-    # scores = scores[0]
-    # classes = classes[0]
-    # num_detections = int(num_detections[0])
-
-    # # Boxes unit in pixels (image coordinates).
-    # boxes_pixels = []
-    # for i in range(num_detections):
-    #     # scale box to image coordinates
-    #     box = boxes[i] * np.array([image.shape[0],
-    #                             image.shape[1], image.shape[0], image.shape[1]])
-    #     box = np.round(box).astype(int)
-    #     boxes_pixels.append(box)
-    # boxes_pixels = np.array(boxes_pixels)
-
-    # # Remove overlapping boxes with non-max suppression, return picked indexes.
-    # pick = non_max_suppression(boxes_pixels, scores[:num_detections], 0.5)
-    # # print(pick)
-
-
-    # for i in pick:
-    #     box = boxes_pixels[i]
-    #     box = np.round(box).astype(int)
-    #     # Draw bounding box.
-    #     image = cv2.rectangle(
-    #         image, (box[1], box[0]), (box[3], box[2]), (0, 255, 0), 2)
-    #     label = "{}:{:.2f}".format(int(classes[i]), scores[i])
-    #     # Draw label (class index and probability).
-    #     draw_label(image, (box[1], box[0]), label)
-
-    # # Save and display the labeled image.
-    # save_image(image[:, :, ::-1])
-
-    # times = []
-    # for i in range(20):
-    #     start_time = time.time()
-    #     scores, boxes, classes, num_detections = tf_sess.run([tf_scores, tf_boxes, tf_classes, tf_num_detections], feed_dict={
-    #         tf_input: image[None, ...]
-    #     })
-
-    #     delta = (time.time() - start_time)
-    #     times.append(delta)
-    # mean_delta = np.array(times).mean()
-    # fps = 1/mean_delta
-    # print('average(sec):{},fps:{}'.format(mean_delta, fps))
-
-    # tf_sess.close()
     pass
