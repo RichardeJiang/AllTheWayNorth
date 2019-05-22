@@ -11,4 +11,8 @@ This is the Python implementation for the vehicle detection project, mainly usin
 ## Files:
 The two main files follow the same logic: load the TensorRT model, take in the image from either video stream or live camera, infer, and lastly render the image output with detection labels. 
 - vid.py: take in a video in the same folder, change the name in **line 143**;
-- ff.py: take in the live camera input, using the standard CSI camera of Raspberry Pi v2 
+- ff.py: take in the live camera input, using the standard CSI Raspberry Pi v2 camera;
+- cam.py: test code for running the camera.
+
+## Remarks:
+Based on the experiments it can be shown that the Nano board is extremely limited in terms of computation power.
