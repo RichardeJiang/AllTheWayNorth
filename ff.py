@@ -100,7 +100,7 @@ def non_max_suppression(boxes, probs=None, nms_threshold=0.3):
     # return only the bounding boxes indexes
     return pick
 
-def gstreamer_pipeline (capture_width=640, capture_height=360, display_width=640, display_height=360, framerate=5, flip_method=0) :   
+def gstreamer_pipeline (capture_width=640, capture_height=360, display_width=640, display_height=360, framerate=8, flip_method=0) :   
     return ('nvarguscamerasrc ! ' 
     'video/x-raw(memory:NVMM), '
     'width=(int)%d, height=(int)%d, '
@@ -240,7 +240,7 @@ if __name__ == "__main__":
 
             cv2.imshow('Camera Input, Detecting...',image_to_show)
 	        # This also acts as 
-            keyCode = cv2.waitKey(30) & 0xff
+            keyCode = cv2.waitKey(10) & 0xff
             # Stop the program on the ESC key
             if keyCode == 27:
                break
