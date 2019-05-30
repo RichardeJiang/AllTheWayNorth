@@ -213,13 +213,13 @@ def process_image(image):
     rho = 4
     theta = np.pi/180
     #threshold is minimum number of intersections in a grid for candidate line to go to output
-    threshold = 20
-    min_line_len = 50
-    max_line_gap = 100
+    threshold = 15
+    min_line_len = 40
+    max_line_gap = 80
     #my hough values started closer to the values in the quiz, but got bumped up considerably for the challenge video
 
     line_image = hough_lines(roi_image, rho, theta, threshold, min_line_len, max_line_gap)
-    result = weighted_img(line_image, image, α=0.8, β=0.5, λ=0.)
+    result = weighted_img(line_image, image, α=0.8, β=0.35, λ=0.)
     return result
 
 if __name__ == '__main__':

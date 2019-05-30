@@ -3,6 +3,7 @@ import tensorflow.contrib.tensorrt as trt
 import numpy as np
 import cv2
 import time
+from lanet import *
 
 def get_frozen_graph(graph_file):
     """Read Frozen Graph file from disk."""
@@ -152,6 +153,7 @@ if __name__ == "__main__":
         """
 
         image_to_show = cv2.resize(image, (standard_width, standard_height))
+        image_to_show = process_image(image_to_show)
         image = cv2.resize(image, (300, 300))
         
         print("image processing finished, inferencing...")

@@ -10,7 +10,10 @@ if __name__ == "__main__":
     while (cap.isOpened()):
         _, img = cap.read()
         img = cv2.resize(img, (standard_width, standard_height))
-        processed = process_image(img)
+        try:
+            processed = process_image(img)
+        except:
+            processed = img
         cv2.imshow('video input result', processed)
         
         keyCode = cv2.waitKey(30) & 0xff

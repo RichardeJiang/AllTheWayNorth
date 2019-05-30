@@ -3,6 +3,7 @@ import tensorflow.contrib.tensorrt as trt
 import numpy as np
 import cv2
 import time
+from lanet import *
 
 def get_frozen_graph(graph_file):
     """Read Frozen Graph file from disk."""
@@ -176,14 +177,19 @@ if __name__ == "__main__":
         while cv2.getWindowProperty('CSI Camera',0) >= 0:
             ret_val, image = cap.read()
             now = time.time()
-            print("Image captured, inferencing...")
+            print("Image captured, processing...")
 
             """
             Inside the main processing loop, do stuff
             """
 
             image_to_show = cv2.resize(image, (standard_width, standard_height))
+            try:
+                image_to_show = process_image(image_to_show)
+            except:
+                print("Error detecting lanes, skipping...")
             image = cv2.resize(image, (300, 300))
+            print("lane detection finished, inferencing...")
 
             """
             Original inference step
