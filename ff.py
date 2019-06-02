@@ -7,7 +7,7 @@ from lanet import *
 
 def get_frozen_graph(graph_file):
     """Read Frozen Graph file from disk."""
-    with tf.gfile.FastGFile(graph_file, "rb") as f:
+    with tf.gfile.GFile(graph_file, "rb") as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
     return graph_def
@@ -100,7 +100,7 @@ def non_max_suppression(boxes, probs=None, nms_threshold=0.3):
     # return only the bounding boxes indexes
     return pick
 
-def gstreamer_pipeline (capture_width=640, capture_height=360, display_width=640, display_height=360, framerate=8, flip_method=0) :   
+def gstreamer_pipeline (capture_width=640, capture_height=360, display_width=640, display_height=360, framerate=6, flip_method=0) :   
     return ('nvarguscamerasrc ! ' 
     'video/x-raw(memory:NVMM), '
     'width=(int)%d, height=(int)%d, '
@@ -139,8 +139,8 @@ if __name__ == "__main__":
     desired_classes = {3:"car", 2:"bicycle", 4:"motorcycle", 6:"bus", 8:"truck"}
 
     # calculation: SSD input dimension: 300 x 300; we want output window: (1280 / 720)*300 x 300
-    standard_width = int((1280 / 720.0) * 300.0)
     standard_height = 300
+    standard_width = int((1280 / 720.0) * standard_height)
 
     # The TensorRT inference graph file downloaded from Colab or your local machine.
     pb_fname = "trt_graph1.pb"

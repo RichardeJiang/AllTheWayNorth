@@ -7,7 +7,7 @@ from lanet import *
 
 def get_frozen_graph(graph_file):
     """Read Frozen Graph file from disk."""
-    with tf.gfile.FastGFile(graph_file, "rb") as f:
+    with tf.gfile.GFile(graph_file, "rb") as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
     return graph_def
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     # print(gstreamer_pipeline(flip_method=0))
     # cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
     cap = cv2.VideoCapture("project_video.mp4")
-    framePerSecond = 13.0
+    framePerSecond = 8.0
     cv2.namedWindow('carVideo', 0)
     while(cap.isOpened()):
         _, image = cap.read()
