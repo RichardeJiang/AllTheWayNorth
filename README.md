@@ -39,7 +39,7 @@ Based on the experiments it can be shown that the Nano board is extremely limite
 
 You may check out the following image; it's a picture captured by our team when we did a real road test with the Jetson Nano setup coupled with the camera on and powered by the power bank:
 
-<img src="./assets/use.png" width="6000px">
+<img src="./assets/use.png" width="600px">
 
 Take note of the red marking area: the recognized vehicles are being displayed on the screen. Due to the moving car we ourselves were in (shake and moving), it's not completely obvious.
 
