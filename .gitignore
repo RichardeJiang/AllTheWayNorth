@@ -43,3 +43,5 @@ Thumbs.db
 *.mp4
 __pycache__
 *.mov
+!assets/*
+# !assets/use.png

@@ -37,5 +37,11 @@ Based on the experiments it can be shown that the Nano board is extremely limite
   - SSD-MobileNet-v2 (TensorRT): crashed;
   - SSD-MobileNet-v1 (TensorRT): max 8 FPS for camera input, 13 FPS on video (reasonable as it seems that the camera takes up quite some RAM and Nano crashed the first time I booted up and configured the camera; actually considering the computation power constraint as specified above, 13 FPS is pretty impressive already).
 
+You may check out the following image; it's a picture captured by our team when we did a real road test with the Jetson Nano setup coupled with the camera on and powered by the power bank:
+
+<img src="./assets/use.png" width="600px">
+
+Take note of the red marking area: the recognized vehicles are being displayed on the screen. Due to the moving car we ourselves were in (shake and moving), it's not completely obvious.
+
 ### Lane detection:
 Up till now during the summer, sad story in terms of lane detection: basic ideas from Udacity and previous CV experience all convey the same rationale we shall follow: gray scale image, edge detection, then Hough Transformation, no questions. However, the real simplest logic as written in ``` lane.py ``` is not working well: if we only use the grey scale image, then when doing the edge detection it's obvious that many lines emerge and the whole Canny result is messy, thus both lanes detected tend to be the ones on the extreme left and right, sometimes even beyond the boundary and caused overflow problems. Therefore, the use of HSV colorspace is necessary, as specified in ``` lanet.py ``` and the original [post](https://medium.com/@galen.ballew/opencv-lanedetection-419361364fc0): what we are looking for is those lane blocks / lines in **yellow** or **white**, which helps us filter out irrelevant edges efficiently.
