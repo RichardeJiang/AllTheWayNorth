@@ -41,7 +41,7 @@ You may check out the following image; it's a picture captured by our team when 
 
 <img src="./assets/use.png" width="600px">
 
-Take note of the red marking area: the recognized vehicles are being displayed on the screen. Due to the moving car we ourselves were in (shake and moving), it's not completely obvious.
+Take note of the red marking area: the recognized vehicles are being displayed on the screen. Due to the moving car we ourselves were in (shaky and moving), it's not completely obvious.
 
 ### Lane detection:
 Up till now during the summer, sad story in terms of lane detection: basic ideas from Udacity and previous CV experience all convey the same rationale we shall follow: gray scale image, edge detection, then Hough Transformation, no questions. However, the real simplest logic as written in ``` lane.py ``` is not working well: if we only use the grey scale image, then when doing the edge detection it's obvious that many lines emerge and the whole Canny result is messy, thus both lanes detected tend to be the ones on the extreme left and right, sometimes even beyond the boundary and caused overflow problems. Therefore, the use of HSV colorspace is necessary, as specified in ``` lanet.py ``` and the original [post](https://medium.com/@galen.ballew/opencv-lanedetection-419361364fc0): what we are looking for is those lane blocks / lines in **yellow** or **white**, which helps us filter out irrelevant edges efficiently.
@@ -53,6 +53,7 @@ The final combined output can be viewed below:
 Due to the connectivity issue with the board no screen recording applications were installed on the Nano when committing the final result, hence the image was obtained by taking photo directly from the screen. However, you can still see the recognized cars and the lane currently in use.
 
 ## TODOs:
+Frankly speaking, what has been accomplished here is a tiny section of what should be presented as the final result. It's rather obvious that sometimes doing deep learning doesn't require rich knowledge of ML, which is demonstrated precisely by the prohgress up till now; to put it straightforward, the above image could only be regarded as a merely justifiable (if not awkward) imitation of the Udacity project. Hence, to truly understand the idea behind deep learning and the training process, the following should be carried out as the ultimate goal:
 - Get a more profound understanding on the training and labelling processes for object detection in DL;
 - Label our own data, or obtain the labeled data online, and further train the current SSD network;
 - Get hands on the nVidia DIGITS lib for more sophisticated self-driving car training platform.
