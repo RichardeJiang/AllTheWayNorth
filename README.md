@@ -2,6 +2,7 @@
 This is the Python implementation for the vehicle detection project, mainly using MobileNet-SSD-V1 based on Tensorflow. The experiment is carried out on nVidia Jetson Nano development board, accelerated with the TensorRT framework, and 2 types of settings are supported:
 - Video input, check vid.py;
 - Live camera input, check ff.py.
+The following link ([here](https://medium.com/@jonathan_hui/what-do-we-learn-from-region-based-object-detectors-faster-r-cnn-r-fcn-fpn-7e354377a7c9)) is, at least to me, an excellent resource to get started on SOTA object detection algorithms (RCNN family, YOLO, SSD, etc), and will make the idea behind the whole project easier to understand.
 
 ## Libraries:
 - OpenCV 3.3.1, pre-built inside the JetPack;
@@ -53,7 +54,7 @@ The final combined output can be viewed below:
 Due to the connectivity issue with the board no screen recording applications were installed on the Nano when committing the final result, hence the image was obtained by taking photo directly from the screen. However, you can still see the recognized cars and the lane currently in use.
 
 ## TODOs:
-Frankly speaking, what has been accomplished here is a tiny section of what should be presented as the final result. It's rather obvious that sometimes doing deep learning doesn't require rich knowledge of ML, which is demonstrated precisely by the prohgress up till now; to put it straightforward, the above image could only be regarded as a merely justifiable (if not awkward) imitation of the Udacity project. Hence, to truly understand the idea behind deep learning and the training process, the following should be carried out as the ultimate goal:
+Frankly speaking, what has been accomplished here is a tiny section of what should be presented as the final result. It's rather obvious that sometimes doing deep learning doesn't require rich knowledge of ML, which is demonstrated precisely by the progress up till now; to put it straightforward, the above image could only be regarded as a merely justifiable (if not awkward) imitation of the Udacity project. Hence, to truly understand the idea behind deep learning and the training process, the following should be carried out as the ultimate goal:
 - Get a more profound understanding on the training and labelling processes for object detection in DL;
 - Label our own data, or obtain the labeled data online, and further train the current SSD network;
 - Get hands on the nVidia DIGITS lib for more sophisticated self-driving car training platform.
