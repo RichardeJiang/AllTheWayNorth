@@ -2,6 +2,7 @@
 This is the Python implementation for the vehicle detection project, mainly using MobileNet-SSD-V1 based on Tensorflow. The experiment is carried out on nVidia Jetson Nano development board, accelerated with the TensorRT framework, and 2 types of settings are supported:
 - Video input, check vid.py;
 - Live camera input, check ff.py.
+
 The following link ([here](https://medium.com/@jonathan_hui/what-do-we-learn-from-region-based-object-detectors-faster-r-cnn-r-fcn-fpn-7e354377a7c9)) is, at least to me, an excellent resource to get started on SOTA object detection algorithms (RCNN family, YOLO, SSD, etc), and will make the idea behind the whole project easier to understand.
 
 ## Libraries:
